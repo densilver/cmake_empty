@@ -1,0 +1,18 @@
+{
+	"editor.insertSpaces": false,
+	"files.trimTrailingWhitespace": false,
+	"files.exclude": {
+		".git": true,
+
+		".build": true,
+
+		".vscode/ipch": true,
+		"build": true,
+
+		".idea": true,
+		"cmake-build-*": true,
+
+		"**/*.swp": true,
+		"**/.DS_Store": true
+	}
+}

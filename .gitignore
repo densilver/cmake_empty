@@ -1,6 +1,10 @@
-build
-
-*.swp
+.build
 
 .idea
 cmake-build-*
+
+.vscode/ipch
+build
+
+*.swp
+.DS_Store
