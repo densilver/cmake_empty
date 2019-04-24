@@ -4,13 +4,11 @@ CMAKE_BIN=cmake
 
 BUILD_TYPE=Debug
 
-PROJECT_DIR=`pwd`
+PROJECT_DIR=$PWD
 BUILD_DIR=.build/${BUILD_TYPE}
 BIN_DIR=${BUILD_DIR}/bin
 
-if [[ "xrebuild" == "x${1}" ]]; then
-	rm -rf ${BUILD_DIR}
-fi
+test "xrebuild" = "x${1}" && rm -rf ${BUILD_DIR}
 ${CMAKE_BIN} -E make_directory ${BUILD_DIR}
 
 cd ${BUILD_DIR}
