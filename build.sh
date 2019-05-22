@@ -1,25 +1,27 @@
 #!/usr/bin/env sh
 
-CMAKE_BIN=cmake
+TARGET_PLATFORM=unix
+test "x${PET_CONSOLE_TARGET_PLATFORM}" = "xemscripten" && TARGET_PLATFORM=${PET_CONSOLE_TARGET_PLATFORM}
 
+CMAKE_BIN=cmake
 BUILD_TYPE=Debug
 
+APP_NAME=pet_console
+
 PROJECT_DIR=$PWD
-BUILD_DIR=.build/${BUILD_TYPE}
+BUILD_DIR=.build/${TARGET_PLATFORM}/${BUILD_TYPE}
 BIN_DIR=${BUILD_DIR}/bin
+
+source ./scripts/building/platform/${TARGET_PLATFORM}.sh
 
 test "xrebuild" = "x${1}" && rm -rf ${BUILD_DIR}
 ${CMAKE_BIN} -E make_directory ${BUILD_DIR}
 
 cd ${BUILD_DIR}
-${CMAKE_BIN} -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ${PROJECT_DIR}
+build_platform_create_project
 cd ${PROJECT_DIR}
 
 ${CMAKE_BIN} --build ${BUILD_DIR} -- -j 8
 
 ${CMAKE_BIN} -E make_directory ${BIN_DIR}
-${CMAKE_BIN} -E copy ${BUILD_DIR}/src/app/app ${BIN_DIR}
-
-echo
-echo run:
-echo ./${BIN_DIR}/app
+build_platform_create_bin
