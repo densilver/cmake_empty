@@ -1,10 +1,15 @@
 #!/usr/bin/env sh
 
-TARGET_PLATFORM=unix
-test "x${PET_CONSOLE_TARGET_PLATFORM}" = "xemscripten" && TARGET_PLATFORM=${PET_CONSOLE_TARGET_PLATFORM}
-
 CMAKE_BIN=cmake
+
 BUILD_TYPE=Debug
+TARGET_PLATFORM=unix
+
+test "x${PET_CONSOLE_TARGET_PLATFORM}" = 'xemscripten' && TARGET_PLATFORM=${PET_CONSOLE_TARGET_PLATFORM}
+test "x${PET_CONSOLE_BUILD_TYPE}" != 'x' && BUILD_TYPE=${PET_CONSOLE_BUILD_TYPE}
+
+echo "build type [${BUILD_TYPE}]"
+echo "target platform [${TARGET_PLATFORM}]"
 
 APP_NAME=pet_console
 
@@ -12,9 +17,9 @@ PROJECT_DIR=$PWD
 BUILD_DIR=.build/${TARGET_PLATFORM}/${BUILD_TYPE}
 BIN_DIR=${BUILD_DIR}/bin
 
-source ./scripts/building/platform/${TARGET_PLATFORM}.sh
+. ./scripts/building/platform/${TARGET_PLATFORM}.sh
 
-test "xrebuild" = "x${1}" && rm -rf ${BUILD_DIR}
+test "x${1}" = 'xrebuild' && rm -rf ${BUILD_DIR}
 ${CMAKE_BIN} -E make_directory ${BUILD_DIR}
 
 cd ${BUILD_DIR}

@@ -37,6 +37,7 @@ WORKDIR $SRC_DIR
 RUN \
 	PATH=/usr/lib/emscripten:$PATH \
 	PET_CONSOLE_TARGET_PLATFORM=emscripten \
+	PET_CONSOLE_BUILD_TYPE=Release \
 	./build.sh rebuild
 
 

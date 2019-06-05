@@ -1,5 +1,6 @@
 build_platform_create_project() {
 	${CMAKE_BIN} \
+		-DCMAKE_EXPORT_COMPILE_COMMANDS=ON  \
 		-DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
 		${PROJECT_DIR}
 }
