@@ -1,15 +1,14 @@
-FROM ubuntu:19.04
+FROM archlinux/base:latest
 
 ENV \
 	TERM=xterm-color \
 	SRC_DIR=/usr/src/pet_console
 
 RUN \
-	apt-get -y update && \
-	apt-get install -y
+	pacman-db-upgrade && \
+	pacman -Syyu --noconfirm
 
-RUN apt-get -y install cmake
-RUN apt-get -y install g++
+RUN pacman -Syu --noconfirm make cmake clang
 
 RUN mkdir $SRC_DIR
 COPY build.sh $SRC_DIR/build.sh
@@ -19,7 +18,9 @@ COPY src $SRC_DIR/src
 
 WORKDIR $SRC_DIR
 RUN \
+	CXX=clang++ \
 	PET_CONSOLE_BUILD_TYPE=Release \
+	PET_CONSOLE_SANETIZE=UBSan \
 	./build.sh rebuild
 
-CMD ["./.build/Release/bin/pet_console"]
+CMD ["./.build/unix/Release/bin/pet_console"]

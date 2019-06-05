@@ -1,7 +1,11 @@
 build_platform_create_project() {
+	local flags="-DCMAKE_BUILD_TYPE=${BUILD_TYPE}"
+	flags="${flags} -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+
+	test "${SANETIZE}" != 'none' && flags="${flags} -DPET_CONSOLE_SANETIZE=1"
+
 	${CMAKE_BIN} \
-		-DCMAKE_EXPORT_COMPILE_COMMANDS=ON  \
-		-DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
+		${flags} \
 		${PROJECT_DIR}
 }
 

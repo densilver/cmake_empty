@@ -2,14 +2,18 @@
 
 CMAKE_BIN=cmake
 
-BUILD_TYPE=Debug
 TARGET_PLATFORM=unix
+
+BUILD_TYPE=Debug
+SANETIZE=none
 
 test "x${PET_CONSOLE_TARGET_PLATFORM}" = 'xemscripten' && TARGET_PLATFORM=${PET_CONSOLE_TARGET_PLATFORM}
 test "x${PET_CONSOLE_BUILD_TYPE}" != 'x' && BUILD_TYPE=${PET_CONSOLE_BUILD_TYPE}
+test "x${PET_CONSOLE_SANETIZE}" != 'x' && SANETIZE=${PET_CONSOLE_SANETIZE}
 
-echo "build type [${BUILD_TYPE}]"
 echo "target platform [${TARGET_PLATFORM}]"
+echo "build type [${BUILD_TYPE}]"
+echo "sanetize [${SANETIZE}]"
 
 APP_NAME=pet_console
 
