@@ -4,6 +4,10 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+if (EMSCRIPTEN)
+	set(CMAKE_EXECUTABLE_SUFFIX .html)
+endif()
+
 add_executable(pet_console
 	src/main.cpp
 )
@@ -20,6 +24,10 @@ target_compile_options(pet_console
 		-Werror
 )
 
+install(TARGETS pet_console
+	RUNTIME DESTINATION bin
+)
+
 if (PET_CONSOLE_SANETIZE)
 	target_compile_options(pet_console
 		PRIVATE
@@ -29,8 +37,4 @@ if (PET_CONSOLE_SANETIZE)
 		PRIVATE
 			-fsanitize=undefined
 	)
-endif()
-
-if (EMSCRIPTEN)
-	set(CMAKE_EXECUTABLE_SUFFIX .html)
 endif()

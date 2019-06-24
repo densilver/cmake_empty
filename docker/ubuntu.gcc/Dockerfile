@@ -22,4 +22,4 @@ RUN \
 	PET_CONSOLE_BUILD_TYPE=Release \
 	./build.sh rebuild
 
-CMD ["./.build/Release/bin/pet_console"]
+CMD ["./.build/unix/Release/bin/pet_console"]
