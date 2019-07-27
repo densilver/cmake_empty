@@ -10,6 +10,18 @@ endif()
 
 add_executable(pet_console
 	src/main.cpp
+	src/matcher.cpp
+	src/matcher.h
+)
+
+add_executable(pet_test
+		src/test.cpp
+		src/matcher.cpp
+		src/matcher.h
+)
+target_include_directories(pet_test
+		PRIVATE
+			$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
 
 target_compile_features(pet_console
@@ -23,8 +35,19 @@ target_compile_options(pet_console
 		-Wpedantic
 		-Werror
 )
+target_compile_features(pet_test
+		PRIVATE
+			cxx_std_11
+)
+target_compile_options(pet_test
+		PRIVATE
+			-Wall
+			-Wextra
+			-Wpedantic
+			-Werror
+)
 
-install(TARGETS pet_console
+install(TARGETS pet_console pet_test
 	RUNTIME DESTINATION bin
 )
 
