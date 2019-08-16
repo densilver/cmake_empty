@@ -1,10 +1,9 @@
 FROM archlinux/base:latest
 
-ENV \
-	TERM=xterm-color \
-	SRC_DIR=/usr/src/pet_console
+ARG SRC_DIR=/usr/src/pet_console
 
-WORKDIR /root
+ENV \
+	TERM=xterm-color
 
 RUN \
 	pacman-db-upgrade && \
@@ -13,6 +12,7 @@ RUN \
 RUN \
 	pacman -Syu --noconfirm emscripten
 
+WORKDIR /root
 RUN \
 	echo "import os" > .emscripten && \
 	echo "EMSCRIPTEN_ROOT = '/usr/lib/emscripten'" >> .emscripten && \

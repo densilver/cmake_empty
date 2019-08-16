@@ -4,9 +4,8 @@
 #include <iostream>
 
 static void test() {
-	std::uint32_t n = std::numeric_limits<std::uint32_t>::max();
-	n += 1;
-	int *p = new int[n];
+	constexpr auto n = std::numeric_limits<std::uint64_t>::max() / 8;
+	auto p = new(std::nothrow) char8_t[n];
 	std::cout << "p: " << p << "\n";
 }
 

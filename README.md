@@ -19,12 +19,6 @@ PET_CONSOLE_SANETIZE=UBSan ./build.sh
 ./.build/unix/Debug/bin/pet_console
 ````
 
-###### Dockerized Undefined Behavior Sanitizer
-````bash
-docker build -f docker/archlinux.clang-ubsan/Dockerfile -t pet_console:ubsan .
-docker run --rm -it pet_console:ubsan
-````
-
 ###### Dockerized CLang-Tidy
 ````bash
 docker build -f docker/archlinux.clang-tidy/Dockerfile -t pet_console:tidy .

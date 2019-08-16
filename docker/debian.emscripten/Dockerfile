@@ -1,4 +1,4 @@
-FROM archlinux/base:latest
+FROM trzeci/emscripten-slim:latest
 
 ARG SRC_DIR=/usr/src/pet_console
 
@@ -6,13 +6,10 @@ ENV \
 	TERM=xterm-color
 
 RUN \
-	pacman-db-upgrade && \
-	pacman -Syyu --noconfirm
+	apt-get -y update && \
+	apt-get install -y
 
-RUN \
-	pacman -Syu --noconfirm make cmake clang && \
-	pacman -Syu --noconfirm python python-pip && \
-	python3 -m pip install pyyaml
+RUN apt-get -y install make cmake
 
 RUN mkdir $SRC_DIR
 COPY build.sh $SRC_DIR/build.sh
@@ -23,8 +20,9 @@ COPY cmake $SRC_DIR/cmake
 
 WORKDIR $SRC_DIR
 RUN \
-	CC=clang CXX=clang++ \
+	PET_CONSOLE_TARGET_PLATFORM=emscripten \
 	PET_CONSOLE_BUILD_TYPE=Release \
 	./build.sh rebuild
 
-CMD python /usr/share/clang/run-clang-tidy.py -p .build/unix/Release
+WORKDIR $SRC_DIR/.build/emscripten/Release/bin
+#CMD python -m http.server 8000
