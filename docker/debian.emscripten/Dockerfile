@@ -1,4 +1,4 @@
-FROM trzeci/emscripten-slim:latest
+FROM debian:buster-slim
 
 ARG SRC_DIR=/usr/src/pet_console
 
@@ -9,7 +9,25 @@ RUN \
 	apt-get -y update && \
 	apt-get install -y
 
-RUN apt-get -y install make cmake
+RUN \
+	apt-get -y install git python
+
+WORKDIR /root
+RUN \
+	mkdir emsdk
+
+WORKDIR /root/emsdk
+RUN \
+	git init && \
+	git remote add origin https://github.com/emscripten-core/emsdk.git && \
+	git pull --rebase origin master && \
+	./emsdk install latest && \
+	./emsdk activate latest && \
+	cd ..
+
+WORKDIR /root
+RUN \
+	apt-get -y install make cmake
 
 RUN mkdir $SRC_DIR
 COPY build.sh $SRC_DIR/build.sh
@@ -20,9 +38,10 @@ COPY cmake $SRC_DIR/cmake
 
 WORKDIR $SRC_DIR
 RUN \
+	PATH=$PATH:/root/emsdk:/root/emsdk/fastcomp/emscripten:/root/emsdk/node/12.9.1_64bit/bin \
 	PET_CONSOLE_TARGET_PLATFORM=emscripten \
 	PET_CONSOLE_BUILD_TYPE=Release \
 	./build.sh rebuild
 
 WORKDIR $SRC_DIR/.build/emscripten/Release/bin
-#CMD python -m http.server 8000
+CMD python -m CGIHTTPServer

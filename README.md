@@ -16,12 +16,12 @@ PET_CONSOLE_TARGET_PLATFORM=emscripten ./build.sh
 ###### Local Undefined Behavior Sanitizer
 ````bash
 PET_CONSOLE_SANETIZE=UBSan ./build.sh
-./.build/unix/Debug/bin/pet_console
 ````
 
 ###### Dockerized CLang-Tidy
 ````bash
 docker build -f docker/archlinux.clang-tidy/Dockerfile -t pet_console:tidy .
+docker run --rm -it pet_console:tidy
 ````
 
 ###### Dockerized valgrind
@@ -32,6 +32,12 @@ docker run --rm -it pet_console:valgrind
 
 ###### Dockerized emscripten
 ````bash
-docker build -f docker/archlinux.emscripten/Dockerfile -t pet_console:emscripten .
-docker run --rm -it pet_console:emscripten
+docker build -f docker/archlinux.emscripten/Dockerfile -t pet_console:emscripten_arch .
+docker run --rm -it pet_console:emscripten_arch
+````
+
+###### Dockerized emscripten
+````bash
+docker build -f docker/debian.emscripten/Dockerfile -t pet_console:emscripten_debian .
+docker run --rm -it pet_console:emscripten_debian
 ````

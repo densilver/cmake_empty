@@ -11,7 +11,7 @@ function(set_default_target_compile_options target)
 			-fno-exceptions
 			-fno-unwind-tables
 
-			-fchar8_t
+			#-fchar8_t
 	)
 endfunction()
 

@@ -25,4 +25,4 @@ RUN \
 	PET_CONSOLE_BUILD_TYPE=Release \
 	./build.sh rebuild
 
-CMD ["valgrind", ".build/unix/Release/bin/pet_console"]
+CMD valgrind --leak-check=full .build/unix/Release/bin/pet_console

@@ -20,5 +20,5 @@ docker run --rm -it pet_console:tidy
 
 #docker build -f docker/archlinux.emscripten/Dockerfile -t pet_console:emscripten .
 
-#docker pull trzeci/emscripten-slim:latest
-#docker build -f docker/debian.emscripten/Dockerfile -t pet_console:emscripten .
+docker pull debian:buster-slim
+docker build -f docker/debian.emscripten/Dockerfile -t pet_console:emscripten .

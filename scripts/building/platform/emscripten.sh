@@ -1,7 +1,7 @@
 build_platform_create_project() {
 	emconfigure ${CMAKE_BIN} \
 		${CMAKE_FLAGS} \
-		${PROJECT_DIR}
+		${PROJECT_DIR} || exit 1
 }
 
 build_platform_create_bin() {
