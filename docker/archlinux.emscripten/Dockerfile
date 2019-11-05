@@ -10,29 +10,30 @@ RUN \
 	pacman -Syyu --noconfirm
 
 RUN \
-	pacman -Syu --noconfirm emscripten
+	pacman -Syu --noconfirm emscripten && \
+	pacman -Syu --noconfirm libxml2
 
 WORKDIR /root
+
 RUN \
 	echo "import os" > .emscripten && \
 	echo "EMSCRIPTEN_ROOT = '/usr/lib/emscripten'" >> .emscripten && \
 	echo "LLVM_ROOT = '/usr/lib/emscripten-llvm'" >> .emscripten && \
 	echo "BINARYEN_ROOT = '/usr'" >> .emscripten && \
-	echo "NODE_JS = '/usr/bin/node'" >> .emscripten && \
-	echo "COMPILER_ENGINE = NODE_JS" >> .emscripten && \
-	echo "JS_ENGINES = [NODE_JS]" >> .emscripten
+	echo "NODE_JS = '/usr/bin/node'" >> .emscripten
 RUN \
 	echo "int main() {}" > binaryen.cpp && \
 	/usr/lib/emscripten/em++ -s WASM=1 binaryen.cpp && \
 	rm -v binaryen.*
 
 RUN \
-	pacman -Syu --noconfirm make
+	pacman -Syu --noconfirm make cmake
 
 RUN mkdir $SRC_DIR
 COPY build.sh $SRC_DIR/build.sh
 COPY scripts $SRC_DIR/scripts
 COPY CMakeLists.txt $SRC_DIR/CMakeLists.txt
+COPY cmake $SRC_DIR/cmake
 COPY src $SRC_DIR/src
 
 WORKDIR $SRC_DIR

@@ -1,7 +1,5 @@
 #!/usr/bin/env sh
 
-DOCKER_BIN=docker
-
 PET_CONSOLE_BUILD_TYPE=Release ./build.sh rebuild
 .build/unix/Release/bin/pet_console
 
@@ -18,7 +16,7 @@ docker run --rm -it pet_console:valgrind
 docker build -f docker/archlinux.clang-tidy/Dockerfile -t pet_console:tidy .
 docker run --rm -it pet_console:tidy
 
-#docker build -f docker/archlinux.emscripten/Dockerfile -t pet_console:emscripten .
+docker build -f docker/archlinux.emscripten/Dockerfile -t pet_console:emscripten .
 
-docker pull debian:buster-slim
-docker build -f docker/debian.emscripten/Dockerfile -t pet_console:emscripten .
+#docker pull debian:buster-slim
+#docker build -f docker/debian.emscripten/Dockerfile -t pet_console:emscripten .
